@@ -42,8 +42,15 @@ data = {
   - Batch Size: 16
   - cfg: yolov5s.yaml (model configuration)
 ```bash
-!cd yolov5 && python detect.py --weights /kaggle/working/yolov5/runs/train/yolov5_traffic_detection/weights/best.pt --img-size 640 --conf-thres 0.4 --source {os.path.join(yolo_data_path, 'images/test')} --save-txt --save-crop
+!export WANDB_MODE=disabled && cd yolov5 && python train.py --img-size 640 --batch-size 16 --epochs 100 --data {data_yaml_path} --cfg yolov5s.yaml --weights '' --name yolov5_traffic_detection --cache
 ```
+- Training Statistics (Epoch 99):
+    - GPU Memory Usage: 3.08 GB
+    - Box Loss: 0.03602
+    - Object Loss: 0.06729
+    - Class Loss: 0.008569
+    - Instances per Batch: 12
+    - Image Size: 640x640
 ## Model Evaluation and Detection: 
 - Run Inference: Use the trained model to predict bounding boxes on test images and save the results.
   - img-size: 640 (input image size for inference)
@@ -64,3 +71,91 @@ data = {
 ## Prediction on External Samples:
 - Load and Predict: Load the exported model and predict bounding boxes on a new set of images.
 
+# Results:
+- After the training process, the model achieved the following results:
+    - Precision (P): 0.74
+    - Recall (R): 0.645
+    - Mean Average Precision at IoU=0.5 (mAP50): 0.704
+    - mAP50-95 (Average Precision across IoU thresholds from 0.5 to 0.95): 0.4
+- Class-wise Metrics:
+    - Car:
+        - Precision (P): 0.81
+        - Recall (R): 0.873
+        - mAP50: 0.9
+        - mAP50-95: 0.642
+    - Number Plate:
+        - Precision (P): 0.752
+        - Recall (R): 0.776
+        - mAP50: 0.778
+        - mAP50-95: 0.323
+    - Blur Number Plate:
+        - Precision (P): 0.799
+        - Recall (R): 0.47
+        - mAP50: 0.584
+        - mAP50-95: 0.28
+    - Two Wheeler:
+        - Precision (P): 0.791
+        - Recall (R): 0.764
+        - mAP50: 0.821
+        - mAP50-95: 0.455
+    - Auto:
+        - Precision (P): 0.785
+        - Recall (R): 0.5
+        - mAP50: 0.569
+        - mAP50-95: 0.261
+    - Bus:
+       - Precision (P): 0.691
+       - Recall (R): 0.664
+       - mAP50: 0.725
+       - mAP50-95: 0.442
+    - Truck:
+        - Precision (P): 0.554
+        - Recall (R): 0.468
+        - mAP50: 0.551
+        - mAP50-95: 0.397
+- The final metrics indicate that the model performs well, especially in detecting Cars and Two Wheelers. The model's performance metrics show improvements in precision, recall, and mAP50 compared to earlier epochs. The mAP50-95 value provides a broader measure of performance across different IoU thresholds, reflecting overall robustness in object detection.
+
+# Samples from Test Set
+## Image Samples:
+
+![1](https://github.com/user-attachments/assets/686adcb2-6e9a-4b2e-854f-bd18f729d709)
+
+![2](https://github.com/user-attachments/assets/74dd8cce-684b-4974-b7bf-ef553618ea11)
+
+![3](https://github.com/user-attachments/assets/cb4ef8ac-af48-4877-aa63-3ed78aca1413)
+
+![4](https://github.com/user-attachments/assets/2a0bb46c-0684-43c0-b50f-3992aaee7b75)
+
+![6](https://github.com/user-attachments/assets/919c89eb-64c3-4c5b-9712-3c21abbe8f71)
+
+![5](https://github.com/user-attachments/assets/4f0cc0ab-8e2f-4a3a-a000-7c9484d92ca5)
+
+![7](https://github.com/user-attachments/assets/e4ef0690-4089-4c27-b867-d5529163ed2e)
+
+## Video Samples:
+- Plotting the vehicle objects across all frames. Here are the last frames from two random video samples from the test set.
+
+![33](https://github.com/user-attachments/assets/871eb2e0-a242-4f72-9db7-136bf8d4076b)
+
+![22](https://github.com/user-attachments/assets/5b6ec928-773b-4b74-a51f-71b8fd445519)
+
+# Conclusion
+The training of your YOLOv5 model for traffic vehicle detection has yielded positive results, demonstrating both robustness and accuracy.
+- **Overall Performance:** The model achieved a mean average precision (mAP50) of 0.704 on the validation set, indicating strong performance in detecting and localizing objects with an Intersection over Union (IoU) threshold of 0.5. This level of accuracy suggests that the model is effective in identifying objects in various scenarios and conditions.
+
+- **Class-Specific Insights:**
+        - Cars are detected with high precision (0.81) and recall (0.873), achieving a high mAP50 of 0.9, indicating excellent performance in identifying cars.
+        - Two Wheelers and Number Plates also show strong performance with mAP50 values of 0.821 and 0.778, respectively, though the model's performance on Blur Number Plates and Auto is comparatively lower.
+        - The detection of Trucks and Buses is less robust, as indicated by lower precision and recall values. This might suggest the need for further fine-tuning or additional training data for these classes.
+- **Loss Metrics:** The low box loss (0.03602), object loss (0.06729), and class loss (0.008569) at the final epoch reflect the model's effectiveness in minimizing prediction errors, contributing to its overall accuracy.
+- **Model Efficiency:** With a training time of just 0.547 hours and a model complexity of 15.8 GFLOPs, the YOLOv5s architecture provides a good balance between performance and computational efficiency, making it suitable for real-time applications.
+In summary, the model demonstrates strong overall performance with particular strengths in detecting cars and two-wheelers. The lower performance on certain classes suggests areas for potential improvement, such as gathering more data or adjusting model parameters to enhance detection accuracy for those classes.
+
+# Acknowledgments
+We would like to acknowledge the YOLOv5[^2] repository for its invaluable contribution to the object detection training process. The YOLOv5 architecture and its associated tools provided the foundation and functionality necessary to develop and train our car detection model efficiently. We appreciate the efforts and open-source contributions of the YOLOv5 team, which have significantly enhanced the performance and capabilities of our project.
+
+[^2]: [Ultralytics YOLOv5](https://github.com/ultralytics/yolov5)
+
+# Technologies
+- Python
+- Kaggle Notebook
