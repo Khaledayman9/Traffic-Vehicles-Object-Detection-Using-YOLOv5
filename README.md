@@ -139,6 +139,17 @@ data = {
 
 ![22](https://github.com/user-attachments/assets/5b6ec928-773b-4b74-a51f-71b8fd445519)
 
+# Samples Outside Test Set
+
+![1](https://github.com/user-attachments/assets/402a1a49-50fe-439e-abc4-50ea5c0eeddd)
+
+![2](https://github.com/user-attachments/assets/4e244910-a21b-42f5-9822-98e86e841efe)
+
+![3](https://github.com/user-attachments/assets/0634a52b-913e-4f38-94f0-0d2e5b00e72d)
+
+![4](https://github.com/user-attachments/assets/2f9c792f-438e-4d57-a5d3-c3102725ad6b)
+
+
 # Conclusion
 The training of your YOLOv5 model for traffic vehicle detection has yielded positive results, demonstrating both robustness and accuracy.
 - **Overall Performance:** The model achieved a mean average precision (mAP50) of 0.704 on the validation set, indicating strong performance in detecting and localizing objects with an Intersection over Union (IoU) threshold of 0.5. This level of accuracy suggests that the model is effective in identifying objects in various scenarios and conditions.
