@@ -1,7 +1,6 @@
 # Traffic-Vehicles-Object-Detection-Using-YOLOv5
 An application designed for detecting and visualizing traffic-related objects in both images and videos. Leveraging the power of YOLOv5, this application is capable of identifying various traffic elements such as cars, number plates, and more, making it ideal for traffic monitoring, analysis, and related tasks.
 
-
 # Dataset
 The dataset[^1] contains labeled images of transport vehicles and number plates using LabelImg in YOLOv5 format. This dataset contains over 700 training samples, 185 validation samples, and over 200 test samples including videos. These images are provided along with corresponding bounding box annotations for training and evaluation. The images were labeled under 7 classes – Car, Number Plate, Blur Number Plate, Two Wheeler, Auto, Bus, and Truck in YOLOv5 format.
 
